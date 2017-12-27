@@ -49,19 +49,19 @@ public class Mob extends Entity {
 		return this.speed_per_level;
 	}
 	
-	private void setCost(int cost) {
+	public void setCost(int cost) {
 		this.cost = cost;
 	}
 	
-	private int getCost() {
+	public int getCost() {
 		return this.cost;
 	}
 	
-	private void setCostPerLevel(int cost) {
+	public void setCostPerLevel(int cost) {
 		this.cost_per_level = cost;
 	}
 	
-	private int getCostPerLevel() {
+	public int getCostPerLevel() {
 		return this.cost_per_level;
 	}
 }
