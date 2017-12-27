@@ -12,6 +12,8 @@ import com.td.screens.MainMenu;
 public class GameClass extends Game {
 	SpriteBatch batch;
 	Texture img;
+	private int HEIGHT;
+	private int WIDTH;
 	
 	@Override
 	public void create () {

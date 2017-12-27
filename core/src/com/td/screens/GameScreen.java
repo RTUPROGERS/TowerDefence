@@ -60,7 +60,7 @@ public	GameScreen(){
 		
 	}
 	
-	private WorldLogic getWorld() {return world;}
+	public WorldLogic getWorld() {return world;}
 
 
 }
