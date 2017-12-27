@@ -16,6 +16,8 @@ private int lvl;
 private LinkedList<Entity> weaponList;
 private LinkedList<Entity> mobList;
 private int spawn;
+private boolean run;
+private boolean buying;
 
 	public WorldLogic(GameScreen g) {
 		game=g;
@@ -24,19 +26,22 @@ private int spawn;
 		weaponList=new LinkedList();
 		mobList=new LinkedList();
 		gameField = MapGenerator.drawField();
+		run=true;
+		buying=false;
 	}	
 	
 	public void update() {
-		
-		
-		
-		
-		if(spawn==0) {
+		if(run) {
+			playerMoney++;  //for test
+			
+			
+			if(spawn==0) {
 			mobList.add(new Mob());
 			spawn=10;
 		}else spawn--;
-		
-		
+
+
+		}
 	}
 	
 	public LinkedList<Entity> getEntity(){
@@ -49,4 +54,8 @@ private int spawn;
 		
 		return gameField;
 	}
+	
+	public int getMoney() {return playerMoney;}
+	public int getHP() {return playerHp;}
+	public boolean isBuying() {return buying;}
 }

@@ -13,6 +13,7 @@ public class InputHandler implements InputProcessor {
 		this.world=world;
 		
 	}
+	public InputHandler() {}
 	
 	
 	@Override
