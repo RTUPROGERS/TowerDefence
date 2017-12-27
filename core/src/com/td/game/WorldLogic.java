@@ -30,4 +30,14 @@ private LinkedList<Entity> mobList;
 		
 	}
 	
+	public LinkedList<Entity> getEntity(){
+		LinkedList ent = new LinkedList(weaponList);
+		ent.addAll(mobList);
+		return ent;
+	}
+	
+	public int[][] getGameField(){
+		
+		return gameField;
+	}
 }
