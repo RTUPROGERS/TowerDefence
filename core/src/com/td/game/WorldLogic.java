@@ -21,7 +21,7 @@ private LinkedList<Entity> mobList;
 		playerMoney=Const.START_CASH;
 		weaponList=new LinkedList();
 		mobList=new LinkedList();
-		
+		gameField = MapGenerator.drawField();
 	}	
 	
 	public void update() {
