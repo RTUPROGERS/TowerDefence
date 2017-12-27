@@ -25,4 +25,8 @@ public class Entity {
 		return this.texture_number;
 	}
 	
+	public void setTextureNumber(int num) {
+		this.texture_number = num;
+	}
+	
 }
