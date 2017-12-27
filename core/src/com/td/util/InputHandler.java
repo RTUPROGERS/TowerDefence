@@ -3,8 +3,6 @@ package com.td.util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
-import com.mygdx.gameWorld.GameWorld;
-import com.mygdx.screens.GameScreen;
 
 public class InputHandler implements InputProcessor {
 
