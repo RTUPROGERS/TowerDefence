@@ -26,8 +26,6 @@ private LinkedList<Entity> mobList;
 	
 	public void update() {
 		
-		
-		
 	}
 	
 	public LinkedList<Entity> getEntity(){
