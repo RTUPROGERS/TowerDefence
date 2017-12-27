@@ -1,13 +1,17 @@
 package com.td.util;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.td.game.WorldLogic;
+import com.td.screens.GameScreen;
 
 public class InputHandler implements InputProcessor {
-
-	public InputHandler(){
-
+	private GameScreen screen;
+	private WorldLogic world;
+	public InputHandler(GameScreen screen,WorldLogic world){
+		this.screen=screen;
+		this.world=world;
+		
 	}
 	
 	
@@ -26,7 +30,8 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean keyTyped(char character) {
 		switch(character) {
-
+		case '1': Gdx.app.log("Handler", "1"); break;
+		case '2': Gdx.app.log("Handle", "2"); break;
 		}
 	
 		

@@ -32,6 +32,7 @@ public class Renderer {
 	     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	     LinkedList<Entity> ent = world.getEntity();
 	     int[][] field=world.getGameField();
+	     shapeRenderer.setAutoShapeType(true);
 	     shapeRenderer.begin();
 	     for(int i=0;i<field.length;i++) {
 	    	 for(int j=0;j<field[i].length;j++) {
@@ -43,7 +44,7 @@ public class Renderer {
 	    	 
 	     }
 	     for(Entity e : ent) {
-	    	 
+	    	 shapeRenderer.circle(e.getX()*40+20, e.getY()*40+20, 20);
 	    	 
 	    	 
 	     }

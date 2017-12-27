@@ -3,6 +3,7 @@ package com.td.game;
 import java.util.LinkedList;
 
 import com.td.Entity.Entity;
+import com.td.Entity.Mob;
 import com.td.screens.GameScreen;
 import com.td.util.Const;
 
@@ -14,6 +15,7 @@ private int[][] gameField;
 private int lvl;
 private LinkedList<Entity> weaponList;
 private LinkedList<Entity> mobList;
+private int spawn;
 
 	public WorldLogic(GameScreen g) {
 		game=g;
@@ -26,6 +28,13 @@ private LinkedList<Entity> mobList;
 	
 	public void update() {
 		
+		
+		
+		
+		if(spawn==0) {
+			mobList.add(new Mob());
+			spawn=10;
+		}else spawn--;
 		
 		
 	}
