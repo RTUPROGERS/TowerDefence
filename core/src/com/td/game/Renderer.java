@@ -3,12 +3,14 @@ package com.td.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.td.screens.GameScreen;
 
 public class Renderer {
 	private GameScreen game;
 	private OrthographicCamera cam;
-	
+	private Texture[] entityTextures;
+	private Texture[] fieldTextures;
 	public Renderer(GameScreen g){
 		game=g;
 		cam = new OrthographicCamera();
