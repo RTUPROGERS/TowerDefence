@@ -7,7 +7,7 @@ import com.td.game.GameClass;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.fullscreen=true;
+		config.fullscreen=false;
 		new LwjglApplication(new GameClass(), config);
 	}
 }
