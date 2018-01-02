@@ -8,6 +8,7 @@ public class Mob extends Entity {
 	private int speed_per_level;
 	private int cost;
 	private int cost_per_level;
+	private int currentPoint;
 	
 	public void setHealth(int health) {
 		this.health = health;
@@ -63,5 +64,13 @@ public class Mob extends Entity {
 	
 	public int getCostPerLevel() {
 		return this.cost_per_level;
+	}
+
+	public int getCurrentPoint() {
+		return currentPoint;
+	}
+
+	public void setCurrentPoint(int currentPoint) {
+		this.currentPoint = currentPoint;
 	}
 }

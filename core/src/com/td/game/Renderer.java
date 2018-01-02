@@ -1,5 +1,6 @@
 package com.td.game;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
@@ -84,7 +85,7 @@ public class Renderer {
 	     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	     LinkedList<Entity> ent = world.getEntity();
 	     int[][] field=world.getGameField();
-	     
+	     ArrayList<Point> path=world.getPath();
 	     if(world.isBuying()) {
 	    	 Gdx.app.getInput().getX();
 	    	 
@@ -93,18 +94,21 @@ public class Renderer {
 	     
 	     shapeRenderer.setAutoShapeType(true);
 	     shapeRenderer.begin();
+	     shapeRenderer.setColor(Color.BROWN);
 	     for(int i=0;i<field.length;i++) {
 	    	 for(int j=0;j<field[i].length;j++) {
-	    		 if(field[i][j]==0)shapeRenderer.setColor(Color.GREEN);else shapeRenderer.setColor(Color.BROWN);
+	    		// if(field[i][j]==0)shapeRenderer.setColor(Color.GREEN);else shapeRenderer.setColor(Color.BROWN);
 	    		 shapeRenderer.rect(100+i*Const.CELL_SIZE, 100+j*Const.CELL_SIZE, Const.CELL_SIZE, Const.CELL_SIZE);
 	    		 
 	    		 
 	    	 }
 	    	 
 	     }
+	     shapeRenderer.setColor(Color.BLUE);
+	     for(Point p:path)shapeRenderer.rect(100+p.x*Const.CELL_SIZE, 100+p.y*Const.CELL_SIZE, Const.CELL_SIZE, Const.CELL_SIZE);
 	     shapeRenderer.setColor(Color.RED);
 	     for(Entity e : ent) {
-	    	 shapeRenderer.circle(100+e.getX()*Const.CELL_SIZE+Const.CELL_SIZE/2, 100+e.getY()*Const.CELL_SIZE+Const.CELL_SIZE/2, Const.CELL_SIZE/2);
+	    	 shapeRenderer.circle(100+(float)e.getX()/10*Const.CELL_SIZE+Const.CELL_SIZE/2, 100+(float)e.getY()/10*Const.CELL_SIZE+Const.CELL_SIZE/2, Const.CELL_SIZE/2);
 	    	 
 	    	 
 	     }

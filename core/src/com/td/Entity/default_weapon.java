@@ -2,7 +2,7 @@ package com.td.Entity;
 
 public class default_weapon extends Weapon {
 	
-	default_weapon(int x, int y) {
+	public default_weapon(int x, int y) {
 		setX(x);
 		setY(y);
 		setTextureNumber(1);

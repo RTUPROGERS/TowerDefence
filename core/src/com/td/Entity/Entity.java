@@ -1,23 +1,23 @@
 package com.td.Entity;
 
 public class Entity {
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	private int texture_number;
 	
-	public void setX(int x) {
+	public void setX(double x) {
 		this.x = x;
 	}
 	
-	public int getX() {
+	public double getX() {
 		return this.x;
 	}
 	
-	public void setY(int y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 
-	public int getY() {
+	public double getY() {
 		return this.y;
 	}
 	
