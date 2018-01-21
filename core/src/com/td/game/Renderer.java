@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.td.Entity.Entity;
 import com.td.screens.GameScreen;
@@ -34,7 +36,7 @@ public class Renderer {
 	private Texture[] hudTextures;
 	private Label hpLab;
 	private Label cashLab;
-	private StretchViewport view;
+	private ScreenViewport view;
 	
 	
 	public Renderer(GameScreen g){
@@ -47,7 +49,7 @@ public class Renderer {
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, g.getWidth(), g.getHeight());
 		shapeRenderer = new ShapeRenderer();
-		view=new StretchViewport(g.getWidth(),g.getHeight(),cam);
+		view=new ScreenViewport(cam);
 		
 	    shapeRenderer.setProjectionMatrix(cam.combined);
 	    world=game.getWorld();
@@ -86,13 +88,34 @@ public class Renderer {
 	     LinkedList<Entity> ent = world.getEntity();
 	     int[][] field=world.getGameField();
 	     ArrayList<Point> path=world.getPath();
-	     if(world.isBuying()) {
-	    	 Gdx.app.getInput().getX();
-	    	 
-	    	 
-	     }
-	     
+	
 	     shapeRenderer.setAutoShapeType(true);
+	          if(true) {
+	        	  shapeRenderer.begin();
+	        	if(Gdx.app.getInput().getX()<100) {
+	        	int x= Gdx.app.getInput().getX()-Const.CELL_SIZE/2;
+	        	int y=Gdx.graphics.getHeight()-Gdx.app.getInput().getY()-Const.CELL_SIZE/2;
+	        	System.out.println(y);
+	    	 
+	        	shapeRenderer.set(ShapeType.Filled);
+	        	shapeRenderer.setColor(Color.RED);
+	        	shapeRenderer.rect(x, y, Const.CELL_SIZE, Const.CELL_SIZE);
+	    	   
+	        	  }else {
+	        		  int x= Gdx.app.getInput().getX();
+	  	        	int y=Gdx.graphics.getHeight()-Gdx.app.getInput().getY();
+	  	        	x=(x/Const.CELL_SIZE)*Const.CELL_SIZE+5;
+	  	        	y=(y/Const.CELL_SIZE)*Const.CELL_SIZE+5;
+	  	        	shapeRenderer.set(ShapeType.Filled);
+		        	shapeRenderer.setColor(Color.RED);
+		        	shapeRenderer.rect(x, y, Const.CELL_SIZE, Const.CELL_SIZE);
+	        		  
+	        	  }
+
+	    	 shapeRenderer.end();
+	     }
+
+	     
 	     shapeRenderer.begin();
 	     shapeRenderer.setColor(Color.BROWN);
 	     for(int i=0;i<field.length;i++) {

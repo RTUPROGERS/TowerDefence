@@ -33,6 +33,8 @@ public class InputHandler implements InputProcessor {
 		switch(character) {
 		case '1': Gdx.app.log("Handler", "1"); break;
 		case '2': Gdx.app.log("Handle", "2"); break;
+		case '3': Gdx.app.exit(); break;
+
 		}
 	
 		
