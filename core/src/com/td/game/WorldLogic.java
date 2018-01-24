@@ -8,6 +8,7 @@ import com.td.Entity.Entity;
 import com.td.Entity.Mob;
 import com.td.Entity.Weapon;
 import com.td.Entity.default_mob;
+import com.td.Entity.default_weapon;
 import com.td.screens.GameScreen;
 import com.td.util.Const;
 
@@ -37,6 +38,7 @@ private boolean buying;
 	}	
 	
 	public void update() {
+		spawnWeapon(50,60);
 		if(run) {
 			playerMoney++;  //for test
 			
@@ -44,7 +46,7 @@ private boolean buying;
 			
 			spawn();
 			move();
-			
+			fire();
 		}
 	}
 	
@@ -53,6 +55,9 @@ private boolean buying;
 			mobList.add(new default_mob(0,0));
 			spawn=Const.SPAWN_RATE;
 		}else spawn--;
+	}
+	private void spawnWeapon(int x, int y) {
+		weaponList.add(new default_weapon(x,y));
 	}
 		
 	
@@ -106,6 +111,29 @@ private boolean buying;
 		mobList.removeAll(removeafter);
 		
 		
+	}
+	
+	public void fire() {
+		LinkedList<Entity> removeafter=new LinkedList();
+		for (Weapon w: weaponList) {
+			double wepX = w.getX();
+			double wepY = w.getY();
+			double r = w.getRange();
+			for (Mob m : mobList) {
+				double mobX = m.getX();
+				double mobY = m.getY(); // krug ----> (x-a)^2 + (y-b)^2 = R^2; x,y = mobx,y; a,b = wepx,y;
+				if (Math.pow(mobX - wepX, 2) + Math.pow(mobY - wepY, 2) < r*r) {
+					int hp = m.getHealth();
+					hp = hp - w.getDamage();
+					m.setHealth(hp);
+					if (m.getHealth() == 0) {
+						removeafter.add(m);
+						continue;
+					}
+				}
+			}
+		}
+		mobList.removeAll(removeafter);
 	}
 	
 	
