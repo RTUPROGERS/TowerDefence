@@ -126,9 +126,8 @@ private boolean buying;
 					int hp = m.getHealth();
 					hp = hp - w.getDamage();
 					m.setHealth(hp);
-					if (m.getHealth() == 0) {
+					if (m.getHealth() <= 0) {
 						removeafter.add(m);
-						continue;
 					}
 				}
 			}

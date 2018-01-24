@@ -6,5 +6,4 @@ public class Bullet extends Entity {
 		setX(startX);
 		setY(startY);
 	}
-	
 }
