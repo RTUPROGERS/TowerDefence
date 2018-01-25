@@ -157,12 +157,23 @@ public class Renderer {
 
 	}
 	
+	public void setEntityTextures(Texture[] entityTextures) {
+		this.entityTextures = entityTextures;
+	}
+	public void setFieldTextures(Texture[] fieldTextures) {
+		this.fieldTextures = fieldTextures;
+	}
+	public void setHudTextures(Texture[] hudTextures) {
+		this.hudTextures = hudTextures;
+	}
 	public Stage getStage() {return stage;}
 	
 	public void updateView(int h,int w) {
 		view.update(w, h);
 		
 	}
+	
+
 	
 	
 	

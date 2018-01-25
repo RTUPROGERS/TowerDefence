@@ -34,26 +34,30 @@ private boolean buying;
 		gameField = MapGenerator.drawField();
 		path=MapGenerator.getPoint();
 		run=true;
-		buying=false;
+		buying=false;		
+		spawnWeapon(50,60);
 	}	
 	
 	public void update() {
-		spawnWeapon(50,60);
 		if(run) {
-			playerMoney++;  //for test
+
 			
 			
 			
 			spawn();
+			System.out.println("SPAWN");
 			move();
+			System.out.println("MOVE");
 			fire();
+			System.out.println("FIRE");
 		}
 	}
 	
 	private void spawn() {
 		if(spawn==0) {
 			mobList.add(new default_mob(0,0));
-			spawn=Const.SPAWN_RATE;
+			spawn=Const.SPAWN_RATE;			
+			playerMoney++;  //for test
 		}else spawn--;
 	}
 	private void spawnWeapon(int x, int y) {
@@ -116,6 +120,10 @@ private boolean buying;
 	public void fire() {
 		LinkedList<Entity> removeafter=new LinkedList();
 		for (Weapon w: weaponList) {
+			if(w.getCurrentTick()!=0) {
+				w.setCurrentTick(w.getCurrentTick()-1);
+				continue;
+			}
 			double wepX = w.getX();
 			double wepY = w.getY();
 			double r = w.getRange();
@@ -128,6 +136,10 @@ private boolean buying;
 					m.setHealth(hp);
 					if (m.getHealth() <= 0) {
 						removeafter.add(m);
+						w.setCurrentTick(w.getFireRate());
+						playerMoney+=m.getCost()+m.getCostPerLevel()*m.getLevel();
+						
+						break;
 					}
 				}
 			}
