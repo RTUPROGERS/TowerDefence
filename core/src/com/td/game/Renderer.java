@@ -15,11 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.td.Entity.Entity;
 import com.td.screens.GameScreen;
 import com.td.util.Const;
@@ -60,6 +60,7 @@ public class Renderer {
 		stage= new Stage();
 		skin= new Skin();
 		Table tableHUD = new Table();
+		//tableHUD.setDebug(true);
 		tableHUD.setFillParent(true);
 		Image hp = new Image(hudTextures[0]);
 		hpLab=new Label("HEALTH",new Label.LabelStyle(new BitmapFont(), Color.RED));
@@ -77,6 +78,19 @@ public class Renderer {
 		tableHUD.top().right();
 		tableHUD.add(vGroup).padRight(5.0f);
 		stage.addActor(tableHUD);
+		
+		Table tableShop= new Table();
+		for(int i=0;i<150;i++) {
+			Label lab= new Label("HEALTH"+i,new Label.LabelStyle(new BitmapFont(), Color.RED));
+			tableShop.add(lab);
+			tableShop.row();
+		}
+		ScrollPane buyList= new ScrollPane(tableShop);
+		Table scrolltable= new Table();
+		scrolltable.add(buyList);
+		scrolltable.left();
+		scrolltable.setFillParent(true);
+		stage.addActor(scrolltable);
 
 		
 	}
@@ -90,7 +104,7 @@ public class Renderer {
 	     ArrayList<Point> path=world.getPath();
 	
 	     shapeRenderer.setAutoShapeType(true);
-	          if(true) {
+	          if(world.isBuying()) {
 	        	  shapeRenderer.begin();
 	        	if(Gdx.app.getInput().getX()<100) {
 	        	int x= Gdx.app.getInput().getX()-Const.CELL_SIZE/2;
@@ -132,7 +146,7 @@ public class Renderer {
 	     shapeRenderer.setColor(Color.RED);
 	     for(Entity e : ent) {
 	    	 shapeRenderer.circle(100+(float)e.getX()/10*Const.CELL_SIZE+Const.CELL_SIZE/2, 100+(float)e.getY()/10*Const.CELL_SIZE+Const.CELL_SIZE/2, Const.CELL_SIZE/2);
-	    	 
+
 	    	 
 	     }
 	     shapeRenderer.end();
@@ -140,6 +154,7 @@ public class Renderer {
 	    cashLab.setText(String.valueOf(world.getMoney())); 
 		stage.act();
 		stage.draw();
+
 	}
 	
 	public Stage getStage() {return stage;}
