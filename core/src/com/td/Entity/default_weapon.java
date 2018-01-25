@@ -6,7 +6,7 @@ public class default_weapon extends Weapon {
 		setX(x);
 		setY(y);
 		setTextureNumber(1);
-		setRange(300);
+		setRange(15);
 		setRangePerLevel(50);
 		setDamage(25);
 		setDamagePerLevel(10);
