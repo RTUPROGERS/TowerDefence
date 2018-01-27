@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
+import com.td.Entity.Bullet;
 import com.td.Entity.Entity;
 import com.td.Entity.Mob;
 import com.td.Entity.Weapon;
@@ -20,6 +21,7 @@ private int[][] gameField;
 private ArrayList<Point> path;
 private int lvl;
 private LinkedList<Weapon> weaponList;
+private LinkedList<Bullet> bulletList;
 private LinkedList<Mob> mobList;
 private int spawn;
 private boolean run;
@@ -31,6 +33,7 @@ private boolean buying;
 		playerMoney=Const.START_CASH;
 		weaponList=new LinkedList();
 		mobList=new LinkedList();
+		bulletList = new LinkedList();
 		gameField = MapGenerator.drawField();
 		path=MapGenerator.getPoint();
 		run=true;
@@ -50,6 +53,7 @@ private boolean buying;
 			//System.out.println("MOVE");
 			fire();
 			//System.out.println("FIRE");
+			bulletFly();
 		}
 	}
 	
@@ -131,6 +135,9 @@ private boolean buying;
 				double mobX = m.getX();
 				double mobY = m.getY(); // krug ----> (x-a)^2 + (y-b)^2 = R^2; x,y = mobx,y; a,b = wepx,y;
 				if (Math.pow(mobX - wepX, 2) + Math.pow(mobY - wepY, 2) < r*r) {
+				// прямая, координата у - y = (x-x1) * (y2 - y1) / (x2 - x1) + y1; gde y - bullY, x - bullX, x1 - startX, x2 = targX;
+					Bullet b = new Bullet(wepX, wepY,mobX,mobY);
+					bulletList.add(b);
 					int hp = m.getHealth();
 					hp = hp - w.getDamage();
 					m.setHealth(hp);
@@ -147,10 +154,38 @@ private boolean buying;
 		mobList.removeAll(removeafter);
 	}
 	
+	public void bulletFly() {
+		for (Bullet b : bulletList) {
+			double startX= b.getStartX();
+			double startY = b.getStartY();
+			double bullX = startX;
+			double bullY = startY;
+			double targX = b.getTargX();
+			double targY = b.getTargY();
+			if (bullX >= targX) {
+				while (bullX >= targX) {
+					bullX-=0.1;
+					bullY = (bullX - startX) * (targY - startY) / (targX - startX) + startY;
+					b.setX(bullX);
+					b.setY(bullY);
+				}
+			} else
+			{
+				while (bullX <= targX) {
+					bullX+=0.1;
+					bullY = (bullX - startX) * (targY - startY) / (targX - startX) + startY;
+					b.setX(bullX);
+					b.setY(bullY);
+				}
+			}
+		}
+	}
+	
 	
 	public LinkedList<Entity> getEntity(){
 		LinkedList ent = new LinkedList(weaponList);
 		ent.addAll(mobList);
+		ent.addAll(bulletList);
 		return ent;
 	}
 	
