@@ -3,17 +3,7 @@ package com.td.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.td.game.GameClass;
 import com.td.game.Renderer;
 import com.td.game.WorldLogic;
 import com.td.util.InputHandler;
@@ -23,16 +13,17 @@ public class GameScreen implements Screen {
 	private Renderer renderer;
 	private int height;
 	private int width;
-
+	private GameClass game;
 	
-public	GameScreen(){
+public	GameScreen(GameClass game){
 		height=Gdx.graphics.getHeight();
 		width=Gdx.graphics.getWidth();
 		world=new WorldLogic(this);
-		renderer= new Renderer(this);
-		InputMultiplexer input= new InputMultiplexer(new InputHandler(this,world));
+		renderer= new Renderer(this,game.getLoader().getManager());
+		InputMultiplexer input= new InputMultiplexer(new InputHandler(this,world));	
 		input.addProcessor(renderer.getStage());
 		Gdx.input.setInputProcessor(input);
+		this.game=game;
 	}
 	
 

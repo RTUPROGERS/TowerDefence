@@ -45,11 +45,11 @@ private boolean buying;
 			
 			
 			spawn();
-			System.out.println("SPAWN");
+			//System.out.println("SPAWN");
 			move();
-			System.out.println("MOVE");
+			//System.out.println("MOVE");
 			fire();
-			System.out.println("FIRE");
+			//System.out.println("FIRE");
 		}
 	}
 	

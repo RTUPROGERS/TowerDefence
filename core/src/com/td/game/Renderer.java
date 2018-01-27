@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -37,12 +38,15 @@ public class Renderer {
 	private Label hpLab;
 	private Label cashLab;
 	private ScreenViewport view;
+	private AssetManager manager;
 	
 	
-	public Renderer(GameScreen g){
+	public Renderer(GameScreen g,AssetManager manager){
+		this.manager=manager;
+		
 		hudTextures= new Texture[2];
-		hudTextures[0]=new Texture(Gdx.files.internal("textures/hp.png"));
-		hudTextures[1]=new Texture(Gdx.files.internal("textures/cash.png"));
+		hudTextures[0]=manager.get("textures/hp.png");
+		hudTextures[1]=manager.get("textures/cash.png");
 		
 		
 		game=g;
