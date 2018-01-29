@@ -173,6 +173,9 @@ private int buyingid;
 					b.setY(bullY);
 					if (bullX <= targX) {
 						removeafter.add(b);
+						int hp = m.getHealth();
+						hp = hp - b.getDamage();
+						m.setHealth(hp);
 					}
 				
 			} else
@@ -184,12 +187,13 @@ private int buyingid;
 					b.setY(bullY);
 					if (bullX >= targX) {
 						removeafter.add(b);
+						int hp = m.getHealth();
+						hp = hp - b.getDamage();
+						m.setHealth(hp);
 					}
 				
 			}
 			int hp = m.getHealth();
-			hp = hp - b.getDamage();
-			m.setHealth(hp);
 			if (m.getHealth() <= 0) {
 				removeafter2.add(m);
 				playerMoney+=m.getCost()+m.getCostPerLevel()*m.getLevel();
