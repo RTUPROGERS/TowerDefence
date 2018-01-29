@@ -44,7 +44,10 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		Gdx.app.log("Handler",String.valueOf(screenX)+"   "+String.valueOf(screenY)+"   "+String.valueOf(pointer)+"   "+String.valueOf(button));
-		
+		if(button==1) {
+			world.setBuying(false);
+			
+		}
 		return false;
 	}
 

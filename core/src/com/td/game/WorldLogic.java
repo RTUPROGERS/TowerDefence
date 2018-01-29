@@ -26,6 +26,9 @@ private LinkedList<Mob> mobList;
 private int spawn;
 private boolean run;
 private boolean buying;
+private int buyingid;
+
+
 
 	public WorldLogic(GameScreen g) {
 		game=g;
@@ -159,7 +162,6 @@ private boolean buying;
 			Mob m = b.getTarget();
 			double startX = b.getX();
 			double startY = b.getY();
-			System.out.println(startX);
 			double targX = m.getX();
 			double targY = m.getY();
 			double bullX = startX;
@@ -210,7 +212,17 @@ private boolean buying;
 		
 		return gameField;
 	}
-	
+	public int getBuyingid() {
+	return buyingid;
+}
+
+public void setBuyingid(int buyingid) {
+	this.buyingid = buyingid;
+}
+
+public void setBuying(boolean buying) {
+	this.buying = buying;
+}
 	public int getMoney() {return playerMoney;}
 	public int getHP() {return playerHp;}
 	public boolean isBuying() {return buying;}

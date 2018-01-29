@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.td.Entity.Entity;
 import com.td.screens.GameScreen;
+import com.td.screens.ShopElement;
 import com.td.util.Const;
 
 public class Renderer {
@@ -84,10 +85,9 @@ public class Renderer {
 		stage.addActor(tableHUD);
 		
 		Table tableShop= new Table();
-		for(int i=0;i<150;i++) {
-			Label lab= new Label("HEALTH"+i,new Label.LabelStyle(new BitmapFont(), Color.RED));
-			tableShop.add(lab);
-			tableShop.row();
+		for(int i=0;i<Const.WEAPON_COUNT;i++) {
+			ShopElement element = new ShopElement(hudTextures[i],DataBank.getWepById(i).getCost(),i,world);
+			tableShop.add(element);
 		}
 		ScrollPane buyList= new ScrollPane(tableShop);
 		Table scrolltable= new Table();
