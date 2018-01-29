@@ -1,29 +1,23 @@
 package com.td.Entity;
 
 public class Bullet extends Entity {
-	private int speed=100;
-	private double startX;
-	private double startY;
-	private double targX;
-	private double targY;
+	private int speed=3;
+	private Mob target;
+	private int damage;
 	
-	public Bullet(double startX, double startY, double targX, double targY) {
-		this.startX = startX;
-		this.startY = startY;
-		this.targX = targX;
-		this.targY = targY;
+	public Bullet(double startX, double startY, Mob m, int damage) {
+		setX(startX);
+		setY(startY);
+		this.damage = damage;
+		this.target = m;
 	}
-	
-	public double getStartX() {
-		return this.startX;
+	public Mob getTarget() {
+		return this.target;
 	}
-	public double getStartY() {
-		return this.startY;
+	public int getSpeed() {
+		return this.speed;
 	}
-	public double getTargX() {
-		return this.targX;
-	}
-	public double getTargY() {
-		return this.targY;
+	public int getDamage() {
+		return this.damage;
 	}
 }

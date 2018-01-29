@@ -136,18 +136,16 @@ private boolean buying;
 				double mobY = m.getY(); // krug ----> (x-a)^2 + (y-b)^2 = R^2; x,y = mobx,y; a,b = wepx,y;
 				if (Math.pow(mobX - wepX, 2) + Math.pow(mobY - wepY, 2) < r*r) {
 				// прямая, координата у - y = (x-x1) * (y2 - y1) / (x2 - x1) + y1; gde y - bullY, x - bullX, x1 - startX, x2 = targX;
-					Bullet b = new Bullet(wepX, wepY,mobX,mobY);
-					bulletList.add(b);
-					int hp = m.getHealth();
+					w.setCurrentTick(w.getFireRate());
+					bulletList.add(new Bullet(wepX, wepY,m, w.getDamage()));
+				/*	int hp = m.getHealth();
 					hp = hp - w.getDamage();
 					m.setHealth(hp);
 					if (m.getHealth() <= 0) {
 						removeafter.add(m);
-						w.setCurrentTick(w.getFireRate());
 						playerMoney+=m.getCost()+m.getCostPerLevel()*m.getLevel();
-						
-						break;
-					}
+					} */
+					break;
 				}
 			}
 		}
@@ -155,30 +153,49 @@ private boolean buying;
 	}
 	
 	public void bulletFly() {
+		LinkedList<Entity> removeafter=new LinkedList();
+		LinkedList<Entity> removeafter2=new LinkedList();
 		for (Bullet b : bulletList) {
-			double startX= b.getStartX();
-			double startY = b.getStartY();
+			Mob m = b.getTarget();
+			double startX = b.getX();
+			double startY = b.getY();
+			System.out.println(startX);
+			double targX = m.getX();
+			double targY = m.getY();
 			double bullX = startX;
 			double bullY = startY;
-			double targX = b.getTargX();
-			double targY = b.getTargY();
 			if (bullX >= targX) {
-				while (bullX >= targX) {
-					bullX-=0.1;
+					bullX-=b.getSpeed();
 					bullY = (bullX - startX) * (targY - startY) / (targX - startX) + startY;
 					b.setX(bullX);
 					b.setY(bullY);
-				}
+					if (bullX <= targX) {
+						removeafter.add(b);
+					}
+				
 			} else
 			{
-				while (bullX <= targX) {
-					bullX+=0.1;
+				
+					bullX+=b.getSpeed();
 					bullY = (bullX - startX) * (targY - startY) / (targX - startX) + startY;
 					b.setX(bullX);
 					b.setY(bullY);
-				}
+					if (bullX >= targX) {
+						removeafter.add(b);
+					}
+				
 			}
+			int hp = m.getHealth();
+			hp = hp - b.getDamage();
+			m.setHealth(hp);
+			if (m.getHealth() <= 0) {
+				removeafter2.add(m);
+				playerMoney+=m.getCost()+m.getCostPerLevel()*m.getLevel();
+			}
+		
 		}
+		bulletList.removeAll(removeafter);
+		mobList.removeAll(removeafter2);
 	}
 	
 	
