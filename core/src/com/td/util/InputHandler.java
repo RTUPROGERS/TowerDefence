@@ -50,7 +50,10 @@ public class InputHandler implements InputProcessor {
 			break;
 		case 0:
 			if (world.isBuying()) {
-				Gdx.app.log("Cell", String.valueOf((screenX-100)/Const.CELL_SIZE)+"       "+String.valueOf((Gdx.graphics.getHeight()-screenY-100)/Const.CELL_SIZE));
+				int x=(screenX-100)/Const.CELL_SIZE;
+				int y=(Gdx.graphics.getHeight()-screenY-100)/Const.CELL_SIZE;
+				world.spawnWeapon(x*10,y*10);
+				world.setBuying(false);
 			}break;
 		}
 		return false;

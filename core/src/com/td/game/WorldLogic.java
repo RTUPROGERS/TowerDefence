@@ -41,7 +41,7 @@ private int buyingid;
 		path=MapGenerator.getPoint();
 		run=true;
 		buying=false;		
-		spawnWeapon(50,60);
+		
 	}	
 	
 	public void update() {
@@ -67,8 +67,12 @@ private int buyingid;
 			playerMoney++;  //for test
 		}else spawn--;
 	}
-	private void spawnWeapon(int x, int y) {
-		weaponList.add(new default_weapon(x,y));
+	public boolean spawnWeapon(int x, int y) {
+		Weapon w = DataBank.getWepById(buyingid);
+		w.setX(x);
+		w.setY(y);
+		weaponList.add(w);
+		return true;
 	}
 		
 	

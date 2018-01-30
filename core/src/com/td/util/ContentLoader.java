@@ -13,6 +13,8 @@ public class ContentLoader {
 		manager.load("textures/floor1.png",Texture.class);
 		manager.load("textures/floor2.png",Texture.class);
 		manager.load("textures/coin.png",Texture.class);
+		manager.load("textures/bullet.png",Texture.class);
+		manager.load("textures/mob.png",Texture.class);
 	}
 	
 	public void finishLoad() {manager.finishLoading();}

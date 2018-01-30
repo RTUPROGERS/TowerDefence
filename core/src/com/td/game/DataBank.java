@@ -9,7 +9,7 @@ public class DataBank {
 	public static Weapon getWepById(int id) {
 		
 		switch (id) {
-		case 0: return new default_weapon(0,0);
+		case 1: return new default_weapon(0,0);
 		}
 		return null;
 	}

@@ -10,6 +10,7 @@ public class Bullet extends Entity {
 		setY(startY);
 		this.damage = damage;
 		this.target = m;
+		this.setTextureNumber(0);
 	}
 	public Mob getTarget() {
 		return this.target;

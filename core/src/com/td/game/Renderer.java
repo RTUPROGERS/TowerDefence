@@ -57,9 +57,10 @@ public class Renderer {
 		fieldTextures[0]=manager.get("textures/floor1.png");
 		fieldTextures[1]=manager.get("textures/floor2.png");
 		
-		entityTextures=new Texture[1];
-		entityTextures[0]=manager.get("textures/wepD.png");
-		
+		entityTextures=new Texture[3];
+		entityTextures[0]=manager.get("textures/bullet.png");
+		entityTextures[1]=manager.get("textures/wepD.png");
+		entityTextures[2]=manager.get("textures/mob.png");
 		game=g;
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, g.getWidth(), g.getHeight());
@@ -98,7 +99,7 @@ public class Renderer {
 		stage.addActor(tableHUD);
 		
 		Table tableShop= new Table();
-		for(int i=0;i<Const.WEAPON_COUNT;i++) {
+		for(int i=1;i<=Const.WEAPON_COUNT;i++) {
 			ShopElement element = new ShopElement(entityTextures[i],DataBank.getWepById(i).getCost(),i,world);
 			tableShop.add(element);
 		}
@@ -165,13 +166,12 @@ public class Renderer {
 	     for(Point p:path)//shapeRenderer.rect(100+(float)p.x*Const.CELL_SIZE, 100+(float)p.y*Const.CELL_SIZE, Const.CELL_SIZE, Const.CELL_SIZE);*/
 	     for(Point p:path)batch.draw(fieldTextures[1], 100+(float)p.x*Const.CELL_SIZE, 100+(float)p.y*Const.CELL_SIZE,Const.CELL_SIZE,Const.CELL_SIZE);
 	     batch.end();
-	     shapeRenderer.begin();
-	     shapeRenderer.setColor(Color.BLACK);
+	     batch.enableBlending();
+	     batch.begin();
 	     for(Entity e : ent) {
-	    	 shapeRenderer.circle(100+(float)e.getX()/10*Const.CELL_SIZE+Const.CELL_SIZE/2, 100+(float)e.getY()/10*Const.CELL_SIZE+Const.CELL_SIZE/2, Const.CELL_SIZE/2);
- 
+	    	 	batch.draw(entityTextures[e.getTextureNumber()], 100+(float)e.getX()/10*Const.CELL_SIZE, 100+(float)e.getY()/10*Const.CELL_SIZE);
 	     }
-	     shapeRenderer.end();
+	     batch.end();
 	    hpLab.setText(String.valueOf(world.getHP())); 
 	    cashLab.setText(String.valueOf(world.getMoney())); 
 	    
