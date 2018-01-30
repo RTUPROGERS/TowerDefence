@@ -48,10 +48,10 @@ public class InputHandler implements InputProcessor {
 		case 1: 
 			world.setBuying(false);
 			break;
-		case 2:
+		case 0:
 			if (world.isBuying()) {
-				
-			}
+				Gdx.app.log("Cell", String.valueOf((screenX-100)/Const.CELL_SIZE)+"       "+String.valueOf((Gdx.graphics.getHeight()-screenY-100)/Const.CELL_SIZE));
+			}break;
 		}
 		return false;
 	}

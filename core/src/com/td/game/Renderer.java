@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -40,15 +41,24 @@ public class Renderer {
 	private Label cashLab;
 	private ScreenViewport view;
 	private AssetManager manager;
+	private SpriteBatch batch;
 	
 	
 	public Renderer(GameScreen g,AssetManager manager){
 		this.manager=manager;
+		batch=new SpriteBatch();
 		
-		hudTextures= new Texture[2];
+		hudTextures= new Texture[3];
 		hudTextures[0]=manager.get("textures/hp.png");
 		hudTextures[1]=manager.get("textures/cash.png");
+		hudTextures[2]=manager.get("textures/coin.png");
 		
+		fieldTextures= new Texture[2];
+		fieldTextures[0]=manager.get("textures/floor1.png");
+		fieldTextures[1]=manager.get("textures/floor2.png");
+		
+		entityTextures=new Texture[1];
+		entityTextures[0]=manager.get("textures/wepD.png");
 		
 		game=g;
 		cam = new OrthographicCamera();
@@ -57,11 +67,14 @@ public class Renderer {
 		view=new ScreenViewport(cam);
 		
 	    shapeRenderer.setProjectionMatrix(cam.combined);
+	    batch.setProjectionMatrix(cam.combined);
+	    batch.disableBlending();
 	    world=game.getWorld();
-	    initStage();
 	    
+	    initStage();
 	}
 	private void initStage() {
+		ShopElement.setCoinTexture(hudTextures[2]);
 		stage= new Stage();
 		skin= new Skin();
 		Table tableHUD = new Table();
@@ -86,7 +99,7 @@ public class Renderer {
 		
 		Table tableShop= new Table();
 		for(int i=0;i<Const.WEAPON_COUNT;i++) {
-			ShopElement element = new ShopElement(hudTextures[i],DataBank.getWepById(i).getCost(),i,world);
+			ShopElement element = new ShopElement(entityTextures[i],DataBank.getWepById(i).getCost(),i,world);
 			tableShop.add(element);
 		}
 		ScrollPane buyList= new ScrollPane(tableShop);
@@ -113,7 +126,6 @@ public class Renderer {
 	        	if(Gdx.app.getInput().getX()<100) {
 	        	int x= Gdx.app.getInput().getX()-Const.CELL_SIZE/2;
 	        	int y=Gdx.graphics.getHeight()-Gdx.app.getInput().getY()-Const.CELL_SIZE/2;
-	        	System.out.println(y);
 	    	 
 	        	shapeRenderer.set(ShapeType.Filled);
 	        	shapeRenderer.setColor(Color.RED);
@@ -132,10 +144,14 @@ public class Renderer {
 
 	    	 shapeRenderer.end();
 	     }
-
-	     
-	     shapeRenderer.begin();
-	     shapeRenderer.setColor(Color.BROWN);
+	         
+	          batch.begin();
+	 	     for(int i=0;i<field.length;i++) {
+		    	 for(int j=0;j<field[i].length;j++) {
+		    		 batch.draw(fieldTextures[0], 100+i*Const.CELL_SIZE, 100+j*Const.CELL_SIZE,Const.CELL_SIZE,Const.CELL_SIZE);
+		    	 }
+	 	     }
+	     /* shapeRenderer.setColor(Color.BROWN);
 	     for(int i=0;i<field.length;i++) {
 	    	 for(int j=0;j<field[i].length;j++) {
 	    		// if(field[i][j]==0)shapeRenderer.setColor(Color.GREEN);else shapeRenderer.setColor(Color.BROWN);
@@ -144,22 +160,49 @@ public class Renderer {
 	    		 
 	    	 }
 	    	 
-	     }
-	     shapeRenderer.setColor(Color.BLUE);
-	     for(Point p:path)shapeRenderer.rect(100+p.x*Const.CELL_SIZE, 100+p.y*Const.CELL_SIZE, Const.CELL_SIZE, Const.CELL_SIZE);
-	     shapeRenderer.setColor(Color.RED);
+	     }*/
+	     /*shapeRenderer.setColor(Color.BLUE);
+	     for(Point p:path)//shapeRenderer.rect(100+(float)p.x*Const.CELL_SIZE, 100+(float)p.y*Const.CELL_SIZE, Const.CELL_SIZE, Const.CELL_SIZE);*/
+	     for(Point p:path)batch.draw(fieldTextures[1], 100+(float)p.x*Const.CELL_SIZE, 100+(float)p.y*Const.CELL_SIZE,Const.CELL_SIZE,Const.CELL_SIZE);
+	     batch.end();
+	     shapeRenderer.begin();
+	     shapeRenderer.setColor(Color.BLACK);
 	     for(Entity e : ent) {
 	    	 shapeRenderer.circle(100+(float)e.getX()/10*Const.CELL_SIZE+Const.CELL_SIZE/2, 100+(float)e.getY()/10*Const.CELL_SIZE+Const.CELL_SIZE/2, Const.CELL_SIZE/2);
-
-	    	 
+ 
 	     }
 	     shapeRenderer.end();
 	    hpLab.setText(String.valueOf(world.getHP())); 
 	    cashLab.setText(String.valueOf(world.getMoney())); 
+	    
+	    if(world.isBuying()) {
+      	  shapeRenderer.begin();
+      	if(Gdx.app.getInput().getX()<100||Gdx.app.getInput().getX()>Const.CELL_SIZE*24) {
+      	int x= Gdx.app.getInput().getX()-Const.CELL_SIZE/2;
+      	int y=Gdx.graphics.getHeight()-Gdx.app.getInput().getY()-Const.CELL_SIZE/2;
+  	 
+      	shapeRenderer.set(ShapeType.Filled);
+      	shapeRenderer.setColor(Color.RED);
+      	shapeRenderer.rect(x, y, Const.CELL_SIZE, Const.CELL_SIZE);
+  	   
+      	  }else {
+      		  int x= Gdx.app.getInput().getX();
+	        	int y=Gdx.graphics.getHeight()-Gdx.app.getInput().getY();
+	        	x=(x/Const.CELL_SIZE)*Const.CELL_SIZE+5;
+	        	y=(y/Const.CELL_SIZE)*Const.CELL_SIZE+5;
+	        	shapeRenderer.set(ShapeType.Filled);
+	        	shapeRenderer.setColor(Color.RED);
+	        	shapeRenderer.rect(x, y, Const.CELL_SIZE, Const.CELL_SIZE);
+      		  
+      	  }
+
+  	 shapeRenderer.end();
+   }
 		stage.act();
 		stage.draw();
 
 	}
+	
 	
 	public void setEntityTextures(Texture[] entityTextures) {
 		this.entityTextures = entityTextures;

@@ -77,7 +77,8 @@ private int buyingid;
 		for(Mob m: mobList) {
 			double x=m.getX();
 			double y=m.getY();
-			int speed=m.getSpeed();
+			double speed=m.getSpeed();
+			speed+=m.getSpeedPerLevel()*m.getLevel();
 			int curpoint=m.getCurrentPoint();
 			if(curpoint==path.size()) {removeafter.add(m);playerHp--;continue;}
 			
@@ -86,18 +87,18 @@ private int buyingid;
 			if(x/10==path.get(curpoint).x&&y/10==path.get(curpoint).y) {m.setCurrentPoint(m.getCurrentPoint()+1);continue;}
 			if(dX!=0) {
 				if(dX<0) {
-					m.setX(x+1);
+					m.setX(x+1+speed);
 				}else {
-					m.setX(x-1);
+					m.setX(x-1-speed);
 					
 				}
 				
 			}else {
 				if(dY<0) {
-					m.setY(y+1);
+					m.setY(y+1+speed);
 					
 				}else {
-					m.setY(y-1);
+					m.setY(y-1-speed);
 					
 				
 				

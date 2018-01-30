@@ -4,8 +4,8 @@ public class Mob extends Entity {
 	private int health;
 	private int health_per_level;
 	private int level;
-	private int speed;
-	private int speed_per_level;
+	private double speed;
+	private double speed_per_level;
 	private int cost;
 	private int cost_per_level;
 	private int currentPoint;
@@ -34,19 +34,19 @@ public class Mob extends Entity {
 		return this.level;
 	}
 	
-	public void setSpeed(int speed) {
+	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
 	
-	public int getSpeed() {
+	public double getSpeed() {
 		return this.speed;
 	}
 	
-	public void setSpeedPerLevel (int speed) {
+	public void setSpeedPerLevel (double speed) {
 		this.speed_per_level = speed;
 	}
 	
-	public int getSpeedPerLevel() {
+	public double getSpeedPerLevel() {
 		return this.speed_per_level;
 	}
 	

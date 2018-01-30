@@ -5,8 +5,8 @@ public class default_mob extends Mob {
 		setX(x);
 		setY(y);
 		setTextureNumber(2);
-		setSpeed(10);
-		setSpeedPerLevel(5);
+		setSpeed(0);
+		setSpeedPerLevel(1);
 		setHealth(100);
 		setHealthPerLevel(25);
 		setLevel(1);

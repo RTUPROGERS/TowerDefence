@@ -18,8 +18,8 @@ private WorldLogic logic;
 	public ShopElement(Texture image, int cost,final int id,final WorldLogic logic){
 		super();
 		Image texture = new Image(image);
-		Label costLabel = new Label(String.valueOf(cost),new Label.LabelStyle(new BitmapFont(), Color.RED));
-		Image coinImage =new Image(image);
+		Label costLabel = new Label(String.valueOf(cost),new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+		Image coinImage =new Image(coin);
 		this.cost=cost;
 		this.id=id;
 		this.logic=logic;
@@ -33,5 +33,7 @@ private WorldLogic logic;
 		super.addActor(coinImage);
 		super.addActor(costLabel);
 	}
+	
+public static void setCoinTexture(Texture tex) {coin=tex;}	
 	
 }
