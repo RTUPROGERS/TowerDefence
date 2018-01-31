@@ -13,11 +13,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
@@ -99,16 +99,21 @@ public class Renderer {
 		stage.addActor(tableHUD);
 		
 		Table tableShop= new Table();
+		//tableShop.setFillParent(true);
 		for(int i=1;i<=Const.WEAPON_COUNT;i++) {
 			ShopElement element = new ShopElement(entityTextures[i],DataBank.getWepById(i).getCost(),i,world);
 			tableShop.add(element);
+			tableShop.row();
 		}
-		ScrollPane buyList= new ScrollPane(tableShop);
+		tableShop.setDebug(true);
 		Table scrolltable= new Table();
-		scrolltable.add(buyList);
-		scrolltable.left();
-		scrolltable.setFillParent(true);
-		stage.addActor(scrolltable);
+		//scrolltable.set
+		scrolltable.setDebug(true);
+		tableShop.left().center();
+		//scrolltable.setFillParent(true);
+		tableShop.setWidth(100);
+		tableShop.setHeight(Gdx.graphics.getHeight());
+		stage.addActor(tableShop);
 
 		
 	}
@@ -122,29 +127,6 @@ public class Renderer {
 	     ArrayList<Point> path=world.getPath();
 	
 	     shapeRenderer.setAutoShapeType(true);
-	          if(world.isBuying()) {
-	        	  shapeRenderer.begin();
-	        	if(Gdx.app.getInput().getX()<100) {
-	        	int x= Gdx.app.getInput().getX()-Const.CELL_SIZE/2;
-	        	int y=Gdx.graphics.getHeight()-Gdx.app.getInput().getY()-Const.CELL_SIZE/2;
-	    	 
-	        	shapeRenderer.set(ShapeType.Filled);
-	        	shapeRenderer.setColor(Color.RED);
-	        	shapeRenderer.rect(x, y, Const.CELL_SIZE, Const.CELL_SIZE);
-	    	   
-	        	  }else {
-	        		  int x= Gdx.app.getInput().getX();
-	  	        	int y=Gdx.graphics.getHeight()-Gdx.app.getInput().getY();
-	  	        	x=(x/Const.CELL_SIZE)*Const.CELL_SIZE+5;
-	  	        	y=(y/Const.CELL_SIZE)*Const.CELL_SIZE+5;
-	  	        	shapeRenderer.set(ShapeType.Filled);
-		        	shapeRenderer.setColor(Color.RED);
-		        	shapeRenderer.rect(x, y, Const.CELL_SIZE, Const.CELL_SIZE);
-	        		  
-	        	  }
-
-	    	 shapeRenderer.end();
-	     }
 	         
 	          batch.begin();
 	 	     for(int i=0;i<field.length;i++) {
@@ -177,17 +159,19 @@ public class Renderer {
 	    
 	    if(world.isBuying()) {
       	  shapeRenderer.begin();
-      	if(Gdx.app.getInput().getX()<100||Gdx.app.getInput().getX()>Const.CELL_SIZE*24) {
-      	int x= Gdx.app.getInput().getX()-Const.CELL_SIZE/2;
-      	int y=Gdx.graphics.getHeight()-Gdx.app.getInput().getY()-Const.CELL_SIZE/2;
+      	  Vector3 vec= cam.unproject(new Vector3(Gdx.app.getInput().getX(),Gdx.app.getInput().getY(),0));
+      	  
+      	if(!(vec.x>100&&vec.x<Const.CELL_SIZE*24+100)) {
+      	int x= (int)vec.x-Const.CELL_SIZE/2;
+      	int y=(int)vec.y-Const.CELL_SIZE/2;
   	 
       	shapeRenderer.set(ShapeType.Filled);
       	shapeRenderer.setColor(Color.RED);
       	shapeRenderer.rect(x, y, Const.CELL_SIZE, Const.CELL_SIZE);
   	   
       	  }else {
-      		  int x= Gdx.app.getInput().getX();
-	        	int y=Gdx.graphics.getHeight()-Gdx.app.getInput().getY();
+      		int x= (int)vec.x-Const.CELL_SIZE/2;
+          	int y=(int)vec.y-Const.CELL_SIZE/2;
 	        	x=(x/Const.CELL_SIZE)*Const.CELL_SIZE+5;
 	        	y=(y/Const.CELL_SIZE)*Const.CELL_SIZE+5;
 	        	shapeRenderer.set(ShapeType.Filled);
@@ -197,10 +181,9 @@ public class Renderer {
       	  }
 
   	 shapeRenderer.end();
-   }
+   }	
 		stage.act();
 		stage.draw();
-
 	}
 	
 	
@@ -216,9 +199,13 @@ public class Renderer {
 	public Stage getStage() {return stage;}
 	
 	public void updateView(int h,int w) {
-		view.update(w, h);
+		view.update(w, h,true);
 		
 	}
+	public OrthographicCamera getCam() {
+		return cam;
+	}
+	
 	
 
 	

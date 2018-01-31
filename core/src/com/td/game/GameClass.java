@@ -1,6 +1,7 @@
 package com.td.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.td.screens.MainMenu;
 import com.td.util.ContentLoader;
 

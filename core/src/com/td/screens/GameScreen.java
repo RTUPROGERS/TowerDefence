@@ -44,7 +44,7 @@ public	GameScreen(GameClass game){
 	public void resize(int width, int height) {
 		this.height=height;
 		this.width=width;
-		renderer.updateView(height, width);
+		//renderer.updateView(height, width);
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public	GameScreen(GameClass game){
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	
@@ -97,5 +97,5 @@ public	GameScreen(GameClass game){
 		this.width = width;
 	}
 	
-
+	public Renderer getRenderer() {return renderer;}
 }
